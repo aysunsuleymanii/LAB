@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8">
+  <title>Event Booking Page</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      background-color: #fffaf2;
+      color: #444;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+    }
+
+    header {
+      background-color: #ffcc80;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+      font-size: 1.5rem;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    main {
+      padding: 20px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    h1, h2, h3 {
+      color: #ff8c00;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      background-color: #fff;
+      border: 1px solid #ffe0b2;
+    }
+
+    th, td {
+      padding: 12px 15px;
+      text-align: left;
+      border-bottom: 1px solid #ffe0b2;
+    }
+
+    th {
+      background-color: #ffcc80;
+      color: #fff;
+    }
+
+    tr:nth-child(even) {
+      background-color: #fff3e0;
+    }
+
+    tr:hover {
+      background-color: #ffeecc;
+    }
+
+    a {
+      color: #ff8c00;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .add-event-link {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #ffcc80;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 25px;
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .add-event-link:hover {
+      background-color: #ff8c00;
+    }
+
+    .form-container {
+      background-color: #fff;
+      padding: 20px;
+      border: 1px solid #ffe0b2;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      margin-top: 20px;
+    }
+
+    .form-container div {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ffe0b2;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+
+    input:focus, select:focus {
+      border-color: #ffcc80;
+      outline: none;
+    }
+
+    button {
+      background-color: #ffcc80;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #ff8c00;
+    }
+
+    .form-container form {
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 600px) {
+      table, th, td {
+        font-size: 0.9rem;
+      }
+
+      .add-event-link {
+        width: 100%;
+        text-align: center;
+      }
+
+      input, button, select {
+        font-size: 0.9rem;
+      }
+
+      button {
+        width: 100%;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+<header>
+  Welcome to Event Booking
+</header>
+<main>
+  <h2>Choose an Event</h2>
+  <form method="get" action="/events">
+    <h3>Available Events</h3>
+    <table>
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Location</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <th:block th:each="event : ${events}">
+        <tr>
+          <td th:text="${event.name}"></td>
+          <td th:text="${event.description}"></td>
+          <td th:text="${event.location.name}"></td>
+          <td>
+            <a th:href="@{/events/edit/{id}(id=${event.id})}">Edit</a> |
+            <a th:href="@{/events/delete/{id}(id=${event.id})}">Delete</a>
+          </td>
+        </tr>
+      </th:block>
+      </tbody>
+    </table>
+    <a href="/events/add" class="add-event-link">Add New Event</a>
+  </form>
+
+  <div class="form-container">
+    <h3>Reserve Tickets</h3>
+    <form action="/reserve" method="post">
+      <div>
+        <label for="eventName">Event Name:</label>
+        <input type="text" id="eventName" name="eventName" required placeholder="Event Name">
+      </div>
+      <div>
+        <label for="userName">Your Name:</label>
+        <input type="text" id="userName" name="userName" required placeholder="Your Name">
+      </div>
+      <div>
+        <label for="ticketCount">Number of Tickets:</label>
+        <input type="number" id="ticketCount" name="ticketCount" min="1" required placeholder="Number of Tickets">
+      </div>
+      <div>
+        <button type="submit">Reserve</button>
+      </div>
+    </form>
+
+    <form action="/events/filter" method="get">
+      <div>
+        <label for="location">Filter by Location:</label>
+        <select name="locationId" id="location">
+          <option value="">Select Location</option>
+          <th:block th:each="location : ${locations}">
+            <option th:value="${location.id}" th:text="${location.name}"></option>
+          </th:block>
+        </select>
+      </div>
+      <div>
+        <button type="submit">Filter</button>
+      </div>
+    </form>
+  </div>
+</main>
+</body>
+</html>

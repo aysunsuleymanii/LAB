@@ -1,0 +1,249 @@
+<!--<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">-->
+
+<!--<head>-->
+<!--    <meta charset="utf-8">-->
+<!--    <title>Booking Confirmation</title>-->
+<!--    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"-->
+<!--          integrity="sha384-pzjw8f+ua7Kw1TIq0bTItzPQRNN8eE9/8FVj1KUzXr1nzNHZHgQ2yXY0+I0FZGDE" crossorigin="anonymous">-->
+<!--    <style>-->
+<!--        body {-->
+<!--            background-color: #f8f9fa;-->
+<!--            font-family: 'Arial', sans-serif;-->
+<!--        }-->
+
+<!--        .container {-->
+<!--            margin-top: 50px;-->
+<!--        }-->
+
+<!--        .alert {-->
+<!--            padding: 20px;-->
+<!--            border-radius: 10px;-->
+<!--        }-->
+
+<!--        .alert-success {-->
+<!--            background-color: #d4edda;-->
+<!--            color: #155724;-->
+<!--        }-->
+
+<!--        .alert-warning {-->
+<!--            background-color: #fff3cd;-->
+<!--            color: #856404;-->
+<!--        }-->
+
+<!--        h1 {-->
+<!--            color: #007bff;-->
+<!--        }-->
+
+<!--        .details p {-->
+<!--            font-size: 1.1rem;-->
+<!--            line-height: 1.5;-->
+<!--        }-->
+
+<!--        .details b {-->
+<!--            color: #007bff;-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+
+<!--<body>-->
+<!--<div class="container mt-5">-->
+<!--    <h1 class="mb-4 text-center">Booking Confirmation</h1>-->
+
+<!--    <div th:if="${booking != null}" class="alert alert-success">-->
+<!--        <h3>Booking Details</h3>-->
+<!--        <div class="details">-->
+<!--            <p><b>Event Name:</b> <span th:text="${booking.eventName}"></span></p>-->
+<!--            <p><b>Attendee Name:</b> <span th:text="${booking.attendeeName}"></span></p>-->
+<!--            <p><b>Client IP Address:</b> <span th:text="${booking.attendeeAddress}"></span></p>-->
+<!--            <p><b>Number of Tickets:</b> <span th:text="${booking.numberOfTickets}"></span></p>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    <div th:unless="${booking != null}" class="alert alert-warning">-->
+<!--        <p>Booking details not available.</p>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"-->
+<!--        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zyTEXq8K9VYdXuxuw+9bZHgVn8y/19jb8c-3Trd" crossorigin="anonymous"></script>-->
+<!--<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"-->
+<!--        integrity="sha384-pzjw8f+ua7Kw1TIq0bTItzPQRNN8eE9/8FVj1KUzXr1nzNHZHgQ2yXY0+I0FZGDE" crossorigin="anonymous"></script>-->
+<!--<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"-->
+<!--        integrity="sha384-pzjw8f+ua7Kw1TIq0bTItzPQRNN8eE9/8FVj1KUzXr1nzNHZHgQ2yXY0+I0FZGDE" crossorigin="anonymous"></script>-->
+<!--</body>-->
+
+<!--</html>-->
+
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Booking Confirmation</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background-color: #fffaf2;
+            color: #444;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: #ffcc80;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            font-size: 1.5rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        main {
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h1, h2, h3 {
+            color: #ff8c00;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: #fff;
+            border: 1px solid #ffe0b2;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ffe0b2;
+        }
+
+        th {
+            background-color: #ffcc80;
+            color: #fff;
+        }
+
+        tr:nth-child(even) {
+            background-color: #fff3e0;
+        }
+
+        tr:hover {
+            background-color: #ffeecc;
+        }
+
+        a {
+            color: #ff8c00;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .form-container {
+            background-color: #fff;
+            padding: 20px;
+            border: 1px solid #ffe0b2;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        .form-container div {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ffe0b2;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #ffcc80;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #ff8c00;
+        }
+
+        @media (max-width: 600px) {
+            table, th, td {
+                font-size: 0.9rem;
+            }
+
+            .add-event-link {
+                width: 100%;
+                text-align: center;
+            }
+
+            input {
+                font-size: 0.9rem;
+            }
+
+            button {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+    <h1 class="text-center">Booking Confirmation</h1>
+
+    <div th:if="${reservations != null}">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Event Name</th>
+                <th>Attendee Name</th>
+                <th>Number of Tickets</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="reservation : ${reservations}">
+                <td th:text="${reservation.eventName}"></td>
+                <td th:text="${reservation.userName}"></td>
+                <td th:text="${reservation.ticketCount}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div th:unless="${reservations != null}">
+        <p>No reservations found.</p>
+    </div>
+
+    <form action="/events" method="get">
+        <button type="submit" class="btn btn-primary">Back to Events List</button>
+    </form>
+
+</div>
+
+
+</body>
+
+</html>

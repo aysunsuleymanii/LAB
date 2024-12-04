@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Add Event</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      background-color: #fffaf2;
+      color: #444;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 50px auto;
+      background-color: #fff;
+      padding: 20px 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border: 1px solid #ffe0b2;
+    }
+
+    h2 {
+      text-align: center;
+      color: #ff8c00;
+      margin-bottom: 20px;
+    }
+
+    form div {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #ff8c00;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    select {
+      width: 100%;
+      padding: 10px;
+      font-size: 1rem;
+      border: 1px solid #ffe0b2;
+      border-radius: 5px;
+      background-color: #fffaf2;
+    }
+
+    input[type="text"]:focus,
+    input[type="number"]:focus,
+    select:focus {
+      border-color: #ffcc80;
+      outline: none;
+      box-shadow: 0 0 5px rgba(255, 140, 0, 0.5);
+    }
+
+    button {
+      width: 100%;
+      padding: 10px 20px;
+      font-size: 1rem;
+      color: #fff;
+      background-color: #ff8c00;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #ffcc80;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 15px;
+      }
+
+      h2 {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+<div class="container">
+  <h2>Add/Edit Event</h2>
+  <form method="post" th:action="@{/events/add}">
+    <div>
+      <label for="name">Event Name:</label>
+      <input type="text" name="name" id="name" required>
+    </div>
+
+    <div>
+      <label for="description">Event Description:</label>
+      <input type="text" name="description" id="description" required>
+    </div>
+
+    <div>
+      <label for="popularityScore">Popularity Score:</label>
+      <input type="number" name="popularityScore" id="popularityScore" required>
+    </div>
+
+    <div>
+      <!--            Second one-->
+      <!--            <label for="location">Location:</label>-->
+      <!--            <select id="location" name="locationId" required>-->
+      <!--                <option value="" disabled selected>Select a location</option>-->
+      <!--                <th:block th:each="location : ${locations}">-->
+      <!--                    <option th:value="${location.id}" th:text="${location.name}"></option>-->
+      <!--                </th:block>-->
+      <!--            </select>-->
+
+      <form action="/events/add" method="post">
+        <label for="location">Location:</label>
+        <select name="locationId" id="location" required>
+          <option value="">--Select Location--</option>
+          <th:block th:each="location : ${locations}">
+            <option th:value="${location.id}" th:text="${location.name}"></option>
+          </th:block>
+        </select>
+        <button type="submit">Save</button>
+      </form>
+
+
+    </div>
+
+    <!--        <button type="submit">Save</button>-->
+  </form>
+</div>
+</body>
+
+</html>
