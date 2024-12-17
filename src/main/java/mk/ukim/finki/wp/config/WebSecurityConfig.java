@@ -33,7 +33,7 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
-                .headers((headers)-> headers
+                .headers((headers) -> headers
                         .frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/", "/home", "/assets/**", "/register")
@@ -75,7 +75,13 @@ public class WebSecurityConfig {
                 .roles("ADMIN")
                 .build();
 
-        return new InMemoryUserDetailsManager(user);
+        UserDetails user2 = User.builder()
+                .username("user")
+                .password(passwordEncoder.encode("user123"))
+                .roles("USER")
+                .build();
+
+        return new InMemoryUserDetailsManager(user, user2);
     }
 
     @Bean
@@ -86,21 +92,26 @@ public class WebSecurityConfig {
                 .roles("ADMIN")
                 .build();
 
-        return new InMemoryUserDetailsManager(user1);
-    }
 
+        UserDetails user2 = User.builder()
+                .username("user")
+                .password(passwordEncoder.encode("user123"))
+                .roles("USER")
+                .build();
+
+
+        return new InMemoryUserDetailsManager(user1, user2);
+    }
 
 
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
         AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
         authenticationManagerBuilder
-                .inMemoryAuthentication()
-                .passwordEncoder(passwordEncoder)
-                .withUser("admin")
-                .password(passwordEncoder.encode("admin123"))
-                .roles("ADMIN");
+                .userDetailsService(inMemoryUserDetailsManager())
+                .passwordEncoder(passwordEncoder);
         return authenticationManagerBuilder.build();
     }
+
 
 }
